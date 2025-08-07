@@ -9,7 +9,7 @@ Este proyecto es la interfaz de un chatbot construida con **React**, **TypeScrip
 - UI simple y funcional
 - Comunicación con API backend vía JSON
 - Manejo de sesión por `sessionId` único
-- ⚙Preparado para despliegue en [Render](https://render.com)
+- Preparado para despliegue en [Render](https://render.com)
 
 ---
 
