@@ -15,6 +15,7 @@ Este proyecto es la interfaz de un chatbot construida con **React**, **TypeScrip
 
 ##  Estructura del proyecto
 
+```
 chatbot-frontend/
 ├── public/
 ├── src/
@@ -34,7 +35,7 @@ chatbot-frontend/
 ├── tsconfig.json
 ├── vite.config.ts
 └── README.md
-
+```
 ---
 
 ## Requisitos
