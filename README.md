@@ -20,14 +20,10 @@ chatbot-frontend/
 ├── public/
 ├── src/
 │ ├── api.ts # Lógica de comunicación con backend
-│ ├── types.ts # Definiciones de tipos (ChatMessage, ChatThread, ...)
+│ ├── types.ts # Definiciones de tipos (ChatMessage)
 │ ├── session.ts # Generación y almacenamiento de sessionId
-│ ├── hooks/useChats.ts# Hook para manejo de hilos y persistencia
 │ ├── components/
-│ │ └── Sidebar.tsx # Barra lateral con lista de conversaciones
-│ ├── pages/
-│ │ ├── NewChat.tsx # Página para iniciar nueva conversación/contexto
-│ │ └── ChatView.tsx # Vista del chat en sí
+│ │ └── Chat.tsx # Vista del chat
 │ ├── App.tsx # Enrutamiento principal
 │ └── index.css # Styles con Tailwind
 ├── .env.example
