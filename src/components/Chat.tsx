@@ -13,10 +13,11 @@ const Chat: React.FC = () => {
 
     const userMessage: ChatMessage = { sender: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
+    const current = input;
     setInput('');
 
     try {
-      const res = await sendMessage({ sessionId, message: input });
+      const res = await sendMessage({ sessionId, message: current });
       const botMessage: ChatMessage = { sender: 'bot', text: res.text };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
