@@ -27,4 +27,5 @@ Este proyecto es la interfaz de un chatbot construida con **React**, **TypeScrip
 git clone https://github.com/tuusuario/chatbot-frontend.git
 cd chatbot-frontend
 npm install
+npm run dev
 
