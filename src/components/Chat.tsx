@@ -1,44 +1,61 @@
+// src/components/Chat.tsx
 import React, { useState } from 'react';
-import type { ChatMessage } from '../types';
 import { sendMessage } from '../api';
-import { getSessionId } from '../session';
+
+type ChatMessage = { sender: 'user' | 'bot'; text: string };
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
-  const sessionId = getSessionId();
+  const [pending, setPending] = useState(false);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || pending) return;
 
-    const userMessage: ChatMessage = { sender: 'user', text: input };
-    setMessages(prev => [...prev, userMessage]);
-    const current = input;
+    const userText = input.trim();
+    setMessages(prev => [...prev, { sender: 'user', text: userText }]);
     setInput('');
+    setPending(true);
 
     try {
-      const res = await sendMessage({ sessionId, message: current });
-      const botMessage: ChatMessage = { sender: 'bot', text: res.text };
-      setMessages(prev => [...prev, botMessage]);
-    } catch (error) {
-      setMessages(prev => [...prev, { sender: 'bot', text: 'Error de conexión.' }]);
+      const res = await sendMessage({
+        message: userText,
+      });
+
+      const botText =
+        (res as any)?.response?.text ??
+        (res as any)?.data?.text ??
+        (res as any)?.text ??
+        '[sin respuesta]';
+
+      setMessages(prev => [...prev, { sender: 'bot', text: botText }]);
+    } catch (err) {
+      setMessages(prev => [...prev, { sender: 'bot', text: 'Error de conexión con el servidor.' }]);
+    } finally {
+      setPending(false);
     }
   };
 
   return (
     <div className="flex flex-col h-[80vh] max-w-lg mx-auto p-4 border rounded">
+      {/* Historial */}
       <div className="flex-1 overflow-y-auto space-y-2">
-        {messages.map((msg, i) => (
+        {messages.map((m, i) => (
           <div
             key={i}
             className={`p-2 rounded max-w-xs break-words ${
-              msg.sender === 'user' ? 'bg-blue-100 self-end' : 'bg-gray-200 self-start'
+              m.sender === 'user' ? 'bg-blue-100 self-end ml-auto' : 'bg-gray-200'
             }`}
           >
-            {msg.text}
+            {m.text}
           </div>
         ))}
+        {pending && (
+          <div className="p-2 rounded bg-gray-100 text-gray-500 w-fit">Escribiendo…</div>
+        )}
       </div>
+
+      {/* Input */}
       <div className="mt-4 flex">
         <input
           type="text"
@@ -47,10 +64,12 @@ const Chat: React.FC = () => {
           className="flex-1 border p-2 rounded-l"
           placeholder="Escribe tu mensaje..."
           onKeyDown={e => e.key === 'Enter' && handleSend()}
+          disabled={pending}
         />
         <button
           onClick={handleSend}
-          className="bg-blue-500 text-white px-4 rounded-r hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 rounded-r hover:bg-blue-600 disabled:opacity-50"
+          disabled={pending}
         >
           Enviar
         </button>

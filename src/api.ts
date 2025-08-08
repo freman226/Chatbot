@@ -1,31 +1,27 @@
+// src/api.ts
+const API_BASE = (import.meta.env.VITE_DOMINIO_BACKEND || '').replace(/\/$/, '');
+// Ejemplo .env: VITE_DOMINIO_BACKEND=http://localhost:3000/api
 
-
-const API_BASE = import.meta.env.VITE_DOMINIO_BACKEND;
-
-export interface MessagePayload {
-  sessionId: string;
+export interface SendMessageBody {
   message: string;
 }
 
-export interface ContextPayload {
-  sessionId: string;
-  context: string;
+export interface BackendOk {
+  success: true;
 }
+export interface BackendErr {
+  success: false;
+  error: string;
+}
+export type BackendEnvelope = BackendOk | BackendErr;
 
-export const sendMessage = async (payload: MessagePayload) => {
-  const res = await fetch(`${API_BASE}/message`, {
+export async function sendMessage(body: SendMessageBody, signal?: AbortSignal): Promise<BackendEnvelope> {
+  const res = await fetch(`${API_BASE}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(body),
+    signal,
   });
-  return res.json();
-};
-
-export const sendContext = async (payload: ContextPayload) => {
-  const res = await fetch(`${API_BASE}/context`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  return res.json();
-};
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json() as Promise<BackendEnvelope>;
+}
