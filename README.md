@@ -13,6 +13,27 @@ Este proyecto es la interfaz de un chatbot construida con **React**, **TypeScrip
 
 ---
 
+##  Estructura del proyecto
+
+```
+chatbot-frontend/
+├── public/
+├── src/
+│ ├── api.ts # Lógica de comunicación con backend
+│ ├── types.ts # Definiciones de tipos (ChatMessage)
+│ ├── session.ts # Generación y almacenamiento de sessionId
+│ ├── components/
+│ │ └── Chat.tsx # Vista del chat
+│ ├── App.tsx # Enrutamiento principal
+│ └── index.css # Styles con Tailwind
+├── .env.example
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
+---
+
 ## Requisitos
 
 - Node.js v18+ (recomendado)
