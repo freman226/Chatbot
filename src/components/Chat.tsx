@@ -22,11 +22,7 @@ const Chat: React.FC = () => {
         message: userText,
       });
 
-      const botText =
-        (res as any)?.response?.text ??
-        (res as any)?.data?.text ??
-        (res as any)?.text ??
-        '[sin respuesta]';
+      const botText = res.response ?? '[sin respuesta]';
 
       setMessages(prev => [...prev, { sender: 'bot', text: botText }]);
     } catch (err) {

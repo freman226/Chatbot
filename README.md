@@ -1,52 +1,66 @@
-# Chatbot Frontend – React + TypeScript
+# Chatbot Frontend
 
-Este proyecto es la interfaz de un chatbot construida con **React**, **TypeScript** y **Tailwind CSS**, que se comunica con un backend mediante endpoints `/message` y `/context`.
-
----
-
-## Características
-
-- UI simple y funcional
-- Comunicación con API backend vía JSON
-- Manejo de sesión por `sessionId` único
-- Preparado para despliegue en [Render](https://render.com)
-
----
-
-##  Estructura del proyecto
-
-```
-chatbot-frontend/
-├── public/
-├── src/
-│ ├── api.ts # Lógica de comunicación con backend
-│ ├── types.ts # Definiciones de tipos (ChatMessage)
-│ ├── session.ts # Generación y almacenamiento de sessionId
-│ ├── components/
-│ │ └── Chat.tsx # Vista del chat
-│ ├── App.tsx # Enrutamiento principal
-│ └── index.css # Styles con Tailwind
-├── .env.example
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
-```
----
+Este proyecto es el frontend de un chatbot, desarrollado con **React**, **TypeScript** y **Vite**. Se comunica con un backend FastAPI para enviar y recibir mensajes.
 
 ## Requisitos
 
-- Node.js v18+ (recomendado)
-- npm o yarn
-- Acceso al backend (ver variable `VITE_DOMINIO_BACKEND`)
-
----
+- Node.js 18+
+- npm
 
 ## Instalación
 
-```bash
-git clone https://github.com/tuusuario/chatbot-frontend.git
-cd chatbot-frontend
-npm install
-npm run dev
+1. **Clona el repositorio y entra a la carpeta del frontend:**
 
+   ```sh
+   cd Frontend/Chatbot
+   ```
+
+2. **Instala las dependencias:**
+
+   ```sh
+   npm install
+   ```
+
+3. **Configura la URL del backend:**
+
+   Edita el archivo `.env` y asegúrate de que la variable apunte a la URL de tu backend:
+
+   ```
+   VITE_DOMINIO_BACKEND=http://localhost:8000
+   ```
+
+## Ejecución en desarrollo
+
+```sh
+npm run dev
+```
+
+Esto abrirá la aplicación en [http://localhost:5173](http://localhost:5173) (puerto por defecto de Vite).
+
+## Estructura de archivos
+
+```
+.
+├── .env
+├── package.json
+├── vite.config.ts
+├── src/
+│   ├── api.ts
+│   ├── App.tsx
+│   ├── components/
+│   │   └── Chat.tsx
+│   └── ...
+└── public/
+```
+
+- **`src/components/Chat.tsx`**: Componente principal del chat.
+- **`src/api.ts`**: Funciones para comunicarse con el backend.
+- **`.env`**: Configuración de la URL del backend.
+
+## Notas
+
+- El frontend requiere que el backend esté corriendo y accesible en la URL configurada.
+- Puedes personalizar estilos y componentes según tus necesidades.
+- Si cambias el puerto del backend, actualiza la variable en `.env`.
+
+---

@@ -15,7 +15,7 @@ export interface BackendErr {
 }
 export type BackendEnvelope = BackendOk | BackendErr;
 
-export async function sendMessage(body: SendMessageBody, signal?: AbortSignal): Promise<BackendEnvelope> {
+export async function sendMessage(body: SendMessageBody, signal?: AbortSignal): Promise<{ response: string }> {
   const res = await fetch(`${API_BASE}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -23,5 +23,5 @@ export async function sendMessage(body: SendMessageBody, signal?: AbortSignal): 
     signal,
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json() as Promise<BackendEnvelope>;
+  return res.json() as Promise<{ response: string }>;
 }
